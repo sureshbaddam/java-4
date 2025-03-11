@@ -1,0 +1,174 @@
+/* General Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 80%; /* Responsive width */
+  max-width: 600px; /* Maximum width */
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Scoreboard */
+.score-board {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.score {
+  font-size: 1.2em;
+  color: #555;
+}
+
+.score span {
+  font-size: 2em;
+  font-weight: bold;
+  color: #3498db; /* A nice blue color */
+  display: block;
+}
+
+/* Choices */
+.choices {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.choice {
+  background-color: #3498db;
+  border: none;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease-in-out; /* Smooth animation */
+}
+
+.choice:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+.choice img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Message */
+.msg-container {
+  margin-bottom: 20px;
+}
+
+#msg {
+  font-size: 1.3em;
+  color: #777;
+  font-weight: bold;
+}
+
+/* Round Counter */
+.round-counter {
+  font-size: 1.1em;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* Reset Button */
+#reset-button {
+  background-color: #e74c3c; /* Red color */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#reset-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Modal Styling */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+  position: relative; /* For absolute positioning of the close button */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #888;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+  .container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .choices {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .choice {
+    margin-bottom: 15px;
+    width: 70px;
+    height: 70px;
+  }
+
+  .choice img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .score-board {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .score {
+    margin-bottom: 10px;
+  }
+}

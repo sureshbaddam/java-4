@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+
+        <div class="score-board">
+            <div class="score">
+                <p>Player</p>
+                <span id="player-score">0</span>
+            </div>
+            <div class="score">
+                <p>Computer</p>
+                <span id="computer-score">0</span>
+            </div>
+        </div>
+
+        <div class="choices">
+            <button class="choice" data-choice="rock">
+                <img src="./rock.jpeg" alt="Rock">
+            </button>
+            <button class="choice" data-choice="paper">
+                <img src="./paper.png" alt="Paper">
+            </button>
+            <button class="choice" data-choice="scissors">
+                <img src="./scissors.jpeg" alt="Scissors">
+            </button>
+        </div>
+
+        <div class="msg-container">
+            <p id="msg">Make your move!</p>
+        </div>
+
+        <div class="round-counter">
+            Round: <span id="round-number">1</span> / 10
+        </div>
+
+        <button id="reset-button">Reset Game</button>
+    </div>
+
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h2 id="game-over-message">Game Over!</h2>
+            <p id="final-result"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+
+<script>
+    const choices = document.querySelectorAll(".choice");
+    const msg = document.querySelector("#msg");
+    const playerScoreElem = document.querySelector("#player-score");
+    const computerScoreElem = document.querySelector("#computer-score");
+    const roundNumberElem = document.querySelector("#round-number");
+    const resetButton = document.querySelector("#reset-button");
+    const gameOverModal = document.getElementById("game-over-modal");
+    const gameOverMessage = document.getElementById("game-over-message");
+    const finalResult = document.getElementById("final-result");
+    const closeButton = document.querySelector(".close-button");
+
+    let playerScore = 0;
+    let computerScore = 0;
+    let round = 1;
+    const totalRounds = 10;
+
+    const genComputerChoice = () => {
+        const options = ["rock", "paper", "scissors"];
+        const randIdx = Math.floor(Math.random() * 3);
+        return options[randIdx];
+    };
+
+    const drawGame = () => {
+        msg.innerText = "Game was Draw. Play again.";
+        msg.style.backgroundColor = "#222";
+    };
+
+    const showWinner = (userWin, userChoice, compChoice) => {
+        if (userWin) {
+            playerScore++;
+            playerScoreElem.innerText = playerScore;
+            msg.innerText = `You win! Your ${userChoice} beats ${compChoice}`;
+            msg.style.backgroundColor = "green";
+        } else {
+            computerScore++;
+            computerScoreElem.innerText = computerScore;
+            msg.innerText = `You lost. ${compChoice} beats your ${userChoice}`;
+            msg.style.backgroundColor = "red";
+        }
+    };
+
+    const playGame = (userChoice) => {
+        if (round > totalRounds) {
+            return; // Game is over
+        }
+
+        const compChoice = genComputerChoice();
+
+        if (userChoice === compChoice) {
+            drawGame();
+        } else {
+            let userWin = true;
+            if (userChoice === "rock") {
+                //scissors, paper
+                userWin = compChoice === "paper" ? false : true;
+            } else if (userChoice === "paper") {
+                //rock, scissors
+                userWin = compChoice === "scissors" ? false : true;
+            } else {
+                //rock, paper
+                userWin = compChoice === "rock" ? false : true;
+            }
+            showWinner(userWin, userChoice, compChoice);
+        }
+
+        round++;
+        roundNumberElem.innerText = round; // Update round number on the page
+
+        if (round > totalRounds) {
+            endGame(); // Call the endgame function when all rounds are played
+        }
+    };
+
+    choices.forEach((choice) => {
+        choice.addEventListener("click", () => {
+            const userChoice = choice.getAttribute("data-choice");
+            playGame(userChoice);
+        });
+    });
+
+    const endGame = () => {
+        // Determine the final winner
+        let finalWinnerMessage = "";
+        if (playerScore > computerScore) {
+            finalWinnerMessage = "Congratulations! You won the game!";
+            gameOverMessage.innerText = "You Won!";
+        } else if (computerScore > playerScore) {
+            finalWinnerMessage = "Computer won the game!";
+            gameOverMessage.innerText = "Computer Won!";
+        } else {
+            finalWinnerMessage = "The game ended in a draw!";
+            gameOverMessage.innerText = "It's a Draw!";
+        }
+
+        finalResult.innerText = finalWinnerMessage;
+
+        // Display the modal
+        gameOverModal.style.display = "flex";
+    };
+
+    // Close the modal
+    closeButton.addEventListener("click", () => {
+        gameOverModal.style.display = "none";
+    });
+
+    // Reset the game
+    resetButton.addEventListener("click", () => {
+        playerScore = 0;
+        computerScore = 0;
+        round = 1;
+
+        playerScoreElem.innerText = playerScore;
+        computerScoreElem.innerText = computerScore;
+        roundNumberElem.innerText = round;
+        msg.innerText = "Make your move!";
+        msg.style.backgroundColor = "#222";
+
+        // Hide the modal if it's open
+        gameOverModal.style.display = "none";
+    });
+</script>
+
+</html>
